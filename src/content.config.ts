@@ -1,33 +1,26 @@
-import { defineCollection, z } from 'astro:content';
-import { docsLoader } from '@astrojs/starlight/loaders';
-import { docsSchema } from '@astrojs/starlight/schema';
+import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
+import { SITE } from "@/config";
 
-export const collections = {
-	docs: defineCollection({
-		loader: docsLoader(),
-		schema: (context) => 
-			docsSchema()(context) // Get the base Starlight schema
-				.extend({
-					// Add your custom fields here
-					date: z.date().optional(),
-					author: z.string().optional(),
-					tags: z.array(z.string()).optional(),
-				})
-				.transform((data) => {
-					// Now 'data' includes both Starlight fields (sidebar) and your custom fields (date)
-					if (data.date) {
-						return {
-							...data,
-							sidebar: {
-								...data.sidebar,
-								badge: data.sidebar?.badge ?? {
-									text: data.date.getFullYear().toString(),
-									variant: 'note'
-								}
-							}
-						};
-					}
-					return data;
-				}),
-	}),
-};
+export const BLOG_PATH = "src/data/blog";
+
+const blog = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.md", base: `./${BLOG_PATH}` }),
+  schema: ({ image }) =>
+    z.object({
+      author: z.string().default(SITE.author),
+      pubDatetime: z.date(),
+      modDatetime: z.date().optional().nullable(),
+      title: z.string(),
+      featured: z.boolean().optional(),
+      draft: z.boolean().optional(),
+      tags: z.array(z.string()).default(["others"]),
+      ogImage: image().or(z.string()).optional(),
+      description: z.string(),
+      canonicalURL: z.string().optional(),
+      hideEditPost: z.boolean().optional(),
+      timezone: z.string().optional(),
+    }),
+});
+
+export const collections = { blog };
