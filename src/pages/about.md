@@ -1,9 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About"
+title: "About this blog"
 ---
-
-## About this blog
 
 I add technical guide and notes of the applications/ framework / code blocks / techniques I encountered in this blog.
 
