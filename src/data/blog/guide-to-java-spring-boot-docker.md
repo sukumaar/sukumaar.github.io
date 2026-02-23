@@ -53,7 +53,7 @@ This is the directory structure of the code:
         └── resources
             └── application.properties
 ```
-
+The main class SpringDemoApplication.java :
 ```java
 package com.example.spring_demo;
 
