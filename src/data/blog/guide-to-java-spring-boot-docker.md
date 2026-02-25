@@ -86,10 +86,10 @@ public class SpringDemoApplication {
 ```
 ### URL mappings:
 
-- / : default is mapped to defaultLanding(), this will simply return 'Hello from Docker'
+- / : default is mapped to `defaultLanding()`, this will simply return 'Hello from Docker'
 - /hello :
-    - is mapped to hello(), this will return extract value from URL parameter name and append to Hello string
-    - Example: /hello?name=ABCD will return 'Hello ABCD!'
+    - is mapped to `hello()`, this will return extract value from URL parameter name and append to Hello string
+    - Example: `/hello?name=ABCD` will return `Hello ABCD!`
 
 ### Dockerfile contents:
 ```shell
@@ -125,7 +125,7 @@ docker run -e "env_port=8087" -p 8008:8087 localhost/spring-docker-demo
 ```
 - 1st line in above code is used to compile and generated final jar
 - 3rd line is used to test if the code is working fine or not, once you enter this command the REST service will be available at `http://localhost:8010`. It is running at the port 8010 as we specified `—-server.port:8010`
-- Once you are done with the testing, you can kill it by CTRL + c or CMD + c.
+- Once you are done with the testing, you can kill it by `CTRL + c` or `CMD + c`.
 - 5th line
     - builds docker image with the JAR file from target directory, and tag it with spring-docker-demo.
     - We also override the jar_file_name argument with actual jar file path that we built in previous stage.
@@ -133,7 +133,7 @@ docker run -e "env_port=8087" -p 8008:8087 localhost/spring-docker-demo
 - 7th line
     - will start the docker container with the JAR file.
     - while starting the container, we have provided value to env_port,this will detect the port for the REST service running inside the container.
-    - -p 8008:8087 will do port forwarding between docker host port (8008) and docker container port (8087).
+    - `-p 8008:8087` will do port forwarding between docker host port (8008) and docker container port (8087).
 - That's all.
 
 _FYI, I used a Linux machine (Ubuntu 24.04) to run the above commands._
